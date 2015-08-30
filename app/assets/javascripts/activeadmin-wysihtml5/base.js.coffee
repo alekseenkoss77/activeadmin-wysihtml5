@@ -38,6 +38,14 @@
 
       $toolbar = $editor.find('.toolbar')
       $textarea = $editor.find('textarea')
+      
+      rules = do ->
+          $.each(wysihtml5ParserRules.tags, (key, val) -> 
+            if val.hasOwnProperty('allow_attributes')
+              val.allow_attributes.push "style"
+            else
+              val.allow_attributes = [ "style" ]
+          )
 
       editor = new wysihtml5.Editor($textarea.attr('id'), {
         toolbar: $toolbar.attr('id'),
