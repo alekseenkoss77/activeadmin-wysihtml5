@@ -18,6 +18,7 @@ class Asset < ActiveRecord::Base
         height: storage.height
       },
       thumb_url: thumb_url,
+      filename: storage.name,
       source_url: {
         full: storage.url,
         three_quarters: percentage_thumb_url(0.75),
@@ -27,4 +28,3 @@ class Asset < ActiveRecord::Base
     }
   end
 end
-

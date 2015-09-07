@@ -38,15 +38,6 @@
 
       $toolbar = $editor.find('.toolbar')
       $textarea = $editor.find('textarea')
-      
-      rules = do ->
-          $.each(wysihtml5ParserRules.tags, (key, val) -> 
-            if val.hasOwnProperty('allow_attributes')
-              val.allow_attributes.push "style"
-            else
-              val.allow_attributes = [ "style" ]
-          )
-
       editor = new wysihtml5.Editor($textarea.attr('id'), {
         toolbar: $toolbar.attr('id'),
         stylesheets: "/assets/activeadmin-wysihtml5/wysiwyg.css",
@@ -114,10 +105,11 @@
           $.getJSON '/admin/assets.json', (data) ->
             $.each data, (i, asset) ->
               $img = $("<img/>")
+              $descr = $("<div class='img-descr'>" + asset.filename + "</div>")
               $img.attr
                 title: "#{asset.dimensions.width}x#{asset.dimensions.height}px"
                 src: asset.thumb_url
-              $a = $("<a/>").attr(href: "#").append($img)
+              $a = $("<a/>").attr(href: "#").append($img).append($descr)
               $a.click ->
                 $gallery.find("a").removeClass("selected")
                 $a.addClass("selected")

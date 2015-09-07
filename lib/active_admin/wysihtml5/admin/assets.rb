@@ -1,5 +1,4 @@
 ActiveAdmin.register Asset do
-
   index as: :grid do |asset|
     link_to(image_tag(asset.storage.thumb("100x100#").url), admin_asset_path(asset))
   end
@@ -44,7 +43,6 @@ ActiveAdmin.register Asset do
       if params['file']
         @asset = Asset.new
         @asset.storage = params['file']
-
         if @asset.save!
           render json: { success: true }.to_json
         else
@@ -61,6 +59,7 @@ ActiveAdmin.register Asset do
         # io.original_filename = params['qqfile']
 
         @asset.storage = Dragonfly::TempObject.new(io.respond_to?(:string) ? io.string : io.read)
+        @asset.storage_name = params['qqfile']
         if @asset.save!
           render json: { success: true }.to_json
         else
